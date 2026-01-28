@@ -28,21 +28,17 @@ def run_generate(
     path: str = None,
     copy: bool = False,
 ):
-    # Proactively prompt for path if not provided
     if path is None:
         path = typer.prompt("Enter repository path or public GitHub URL", default=".")
     
-    # Prompt for days if not provided
     if days is None:
         days = typer.prompt("Enter number of days to look back", default=1, type=int)
 
-    # Prompt for author if not provided
     if author is None:
         author = typer.prompt("Filter by author (leave empty for all)", default="", show_default=False)
         if not author:
             author = None
     
-    # Validate repository
     if not is_valid_repository(path):
         console.print(f"[red]Error: '{path}' is not a valid git repository[/red]")
         raise typer.Exit(code=1)
@@ -63,7 +59,6 @@ def run_generate(
     
     console.print(f"[green]Found {len(commits)} commit(s)[/green]\n")
     
-    # Create a nice table
     table = Table(title="Recent Activity", show_header=True, header_style="bold magenta")
     table.add_column("Hash", style="cyan", no_wrap=True)
     table.add_column("Time", style="yellow")
@@ -80,22 +75,18 @@ def run_generate(
 
     console.print(table)
     
-    # Group and format commits
     grouped = group_commits_by_category(commits)
     standup_text = format_standup(grouped)
     
-    # Display formatted standup
     console.print("\n[bold]--- Standup Summary ---[/bold]")
     console.print(standup_text)
     
-    # Show statistics
     console.print("\n[bold]--- Statistics ---[/bold]")
     console.print(f"Total Commits: {len(commits)}")
     for cat, items in grouped.items():
         if items:
             console.print(f"{cat}: {len(items)}")
 
-    # Copy to clipboard if requested
     if copy:
         try:
             pyperclip.copy(standup_text)

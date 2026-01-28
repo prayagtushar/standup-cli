@@ -1,8 +1,3 @@
-"""
-Git operations module for retrieving commit history.
-Supports both local repositories and public GitHub URLs.
-"""
-
 import datetime
 import os
 import shutil
@@ -12,15 +7,6 @@ from git.exc import InvalidGitRepositoryError, GitCommandError
 
 
 def is_github_url(path: str) -> bool:
-    """
-    Check if the provided path is a GitHub URL.
-    
-    Args:
-        path: Path or URL to check
-        
-    Returns:
-        True if it's a GitHub/git URL, False otherwise
-    """
     return (
         path.startswith("https://github.com/") or 
         path.startswith("git@github.com:") or
@@ -30,28 +16,13 @@ def is_github_url(path: str) -> bool:
 
 
 def clone_repo(repo_url: str) -> str:
-    """
-    Clone a GitHub repository to a temporary directory.
-    
-    Args:
-        repo_url: GitHub repository URL
-        
-    Returns:
-        Path to the cloned repository
-        
-    Raises:
-        ValueError: If clone fails
-    """
     try:
-        # Create temp directory
         temp_dir = tempfile.mkdtemp(prefix="standup_")
         
-        # Clone repository
-        Repo.clone_from(repo_url, temp_dir)
+=        Repo.clone_from(repo_url, temp_dir)
         
         return temp_dir
     except GitCommandError as e:
-        # Clean up on failure
         if os.path.exists(temp_dir):
             shutil.rmtree(temp_dir)
         raise ValueError(f"Failed to clone repository: {str(e)}")
@@ -72,7 +43,7 @@ def cleanup_temp_repo(repo_path: str) -> None:
         if os.path.exists(repo_path) and repo_path.startswith(tempfile.gettempdir()):
             shutil.rmtree(repo_path)
     except Exception:
-        pass  # Silently ignore cleanup errors
+        pass
 
 
 def is_valid_repository(repo_path: str) -> bool:
@@ -85,11 +56,9 @@ def is_valid_repository(repo_path: str) -> bool:
     Returns:
         True if valid git repository, False otherwise
     """
-    # If it's a URL, we can't validate without cloning
     if is_github_url(repo_path):
-        return True  # Assume valid, will validate during clone
+        return True
     
-    # Check if local path is valid
     try:
         if os.path.exists(repo_path):
             Repo(repo_path)
@@ -116,7 +85,6 @@ def get_recent_commits(repo_path: str = ".", days: int = 1, author_name: str = N
     temp_repo_path = None
     
     try:
-        # If it's a GitHub URL, clone it first
         if is_github_url(repo_path):
             temp_repo_path = clone_repo(repo_path)
             actual_repo_path = temp_repo_path
@@ -125,17 +93,14 @@ def get_recent_commits(repo_path: str = ".", days: int = 1, author_name: str = N
         
         repo = Repo(actual_repo_path)
         
-        # Calculate the cutoff time
         cutoff_date = datetime.datetime.now() - datetime.timedelta(days=days)
 
         commits = []
         for commit in repo.iter_commits():
-            # Filter by date
             commit_date = commit.committed_datetime.replace(tzinfo=None)
             if commit_date < cutoff_date:
-                continue  # Skip commits older than the cutoff date
+                continue
 
-            # Filter by author (optional, case-insensitive substring match)
             if author_name and author_name.lower() not in commit.author.name.lower():
                 continue
 
@@ -157,6 +122,5 @@ def get_recent_commits(repo_path: str = ".", days: int = 1, author_name: str = N
     except Exception as e:
         raise RuntimeError(f"Error reading git repo: {e}")
     finally:
-        # Clean up temporary cloned repository
         if temp_repo_path:
             cleanup_temp_repo(temp_repo_path)

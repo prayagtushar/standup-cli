@@ -16,7 +16,6 @@ def extract_prefix(message: str) -> str:
     parts = message.split()
     if not parts:
         return ""
-    # Remove colons if present (e.g., "feat:" -> "feat")
     return parts[0].lower().rstrip(":")
 
 
@@ -76,7 +75,7 @@ def format_standup(grouped_commits: dict[str, list[dict]]) -> str:
     output = []
     
     for category, commits in grouped_commits.items():
-        if commits:  # Only include categories that have commits
+        if commits:
             output.append(f"\n{category}")
             for commit in commits:
                 output.append(f"  - {clean_message(commit['message'])}")

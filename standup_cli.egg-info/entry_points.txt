@@ -1,2 +1,0 @@
-[console_scripts]
-standup-cli = main:app
