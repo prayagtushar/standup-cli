@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "standup-cli"
+version = "0.1.0"
+description = "Daily Standup Auto-Generator from git commits"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+    {name = "Prayag Tushar", email = "prayagtushar2016@gmail.com"}
+]
+license = {text = "MIT"}
+keywords = ["standup", "git", "cli", "commits", "automation"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "typer>=0.12.0",
+    "rich>=13.7.0",
+    "GitPython>=3.1.43",
+    "pyperclip>=1.8.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/prayagtushar/standup-cli"
+Repository = "https://github.com/prayagtushar/standup-cli.git"
+Issues = "https://github.com/prayagtushar/standup-cli/issues"
+
+[project.scripts]
+standup-cli = "main:app"
