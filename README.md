@@ -2,7 +2,7 @@
 
 **Standup-CLI** is a terminal tool that generates daily standup summaries from git commit history. It supports local repositories and public GitHub URLs, automatically categorizing your work into Features, Bug Fixes, and Maintenance.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 
@@ -61,7 +61,7 @@ python main.py [OPTIONS]
 - **Filter by Name & Copy:**
   `python main.py -a "Alice" -c`
 
-## 📊 Features
+## Features
 
 - **Interactive Mode:** Guides you through setup if no arguments are provided.
 - **Auto-Categorization:** Uses commit message prefixes (feat, fix, docs, etc.) to group your updates.
@@ -69,7 +69,7 @@ python main.py [OPTIONS]
 - **Rich Formatting:** Beautiful tables and colored output for better readability.
 - **Statistics:** Provides a quick count of your activity by category.
 
-## 📂 Project Structure
+## Project Structure
 
 - `main.py`: The entry point and CLI logic.
 - `git_utils.py`: Logic for cloning and reading git history.
