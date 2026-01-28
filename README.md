@@ -2,6 +2,10 @@
 
 **Standup-CLI** is a terminal tool that generates daily standup summaries from git commit history. It supports local repositories and public GitHub URLs, automatically categorizing your work into Features, Bug Fixes, and Maintenance.
 
+## Demo
+https://github.com/user-attachments/assets/5473a46e-dbbc-4576-96eb-e69c7038c7ea
+
+
 ## Quick Start
 
 ### Installation
@@ -17,6 +21,7 @@ standup-cli
 **Option 2: From Homebrew (macOS)**
 ```bash
 brew tap prayagtushar/standup-cli
+
 brew install standup-cli
 standup-cli
 ```
