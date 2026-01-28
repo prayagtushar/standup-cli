@@ -1,0 +1,13 @@
+LICENSE
+README.md
+git_utils.py
+main.py
+parser.py
+pyproject.toml
+setup.py
+standup_cli.egg-info/PKG-INFO
+standup_cli.egg-info/SOURCES.txt
+standup_cli.egg-info/dependency_links.txt
+standup_cli.egg-info/entry_points.txt
+standup_cli.egg-info/requires.txt
+standup_cli.egg-info/top_level.txt
